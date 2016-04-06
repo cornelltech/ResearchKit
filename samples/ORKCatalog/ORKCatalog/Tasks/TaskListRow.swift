@@ -77,6 +77,7 @@ enum TaskListRow: Int, CustomStringConvertible {
     case ValidatedTextQuestion
     case ImageCapture
     case Wait
+    case FullAssessment
     
     case EligibilityTask
     case Consent
@@ -131,6 +132,7 @@ enum TaskListRow: Int, CustomStringConvertible {
                     .ValidatedTextQuestion,
                     .ImageCapture,
                     .Wait,
+                    .FullAssessment,
                 ]),
             TaskListRowSection(title: "Onboarding", rows:
                 [
@@ -210,6 +212,9 @@ enum TaskListRow: Int, CustomStringConvertible {
             
         case .Wait:
             return NSLocalizedString("Wait Step", comment: "")
+            
+        case .FullAssessment:
+            return NSLocalizedString("YADL Full Assessment", comment: "")
 
         case .EligibilityTask:
             return NSLocalizedString("Eligibility Task Example", comment: "")
@@ -352,6 +357,10 @@ enum TaskListRow: Int, CustomStringConvertible {
         case ImageCaptureTask
         case ImageCaptureStep
         
+        //YADL
+        case YADLFullAssessmentTask
+        case YADLFullAssessmentStep
+        
         // Task with an example of waiting.
         case WaitTask
         case WaitStepDeterminate
@@ -459,6 +468,9 @@ enum TaskListRow: Int, CustomStringConvertible {
             
         case .Wait:
             return waitTask
+            
+        case .FullAssessment:
+            return fullAssessmentTask
         
         case .EligibilityTask:
             return eligibilityTask
@@ -905,6 +917,33 @@ enum TaskListRow: Int, CustomStringConvertible {
         waitStepDeterminate.indicatorType = ORKProgressIndicatorType.ProgressBar
         
         return ORKOrderedTask(identifier: String(Identifier.WaitTask), steps: [waitStepIndeterminate, waitStepDeterminate])
+    }
+    
+    private var fullAssessmentTask: ORKTask {
+        let textChoiceOneText = NSLocalizedString("Easy", comment: "")
+        let textChoiceTwoText = NSLocalizedString("Moderate", comment: "")
+        let textChoiceThreeText = NSLocalizedString("Hard", comment: "")
+        
+        // The text to display can be separate from the value coded for each choice:
+        let textChoices = [
+            ORKTextChoice(text: textChoiceOneText, value: "easy"),
+            ORKTextChoice(text: textChoiceTwoText, value: "moderate"),
+            ORKTextChoice(text: textChoiceThreeText, value: "hard")
+        ]
+        
+        let answerFormat = ORKAnswerFormat.choiceAnswerFormatWithStyle(.SingleChoice, textChoices: textChoices)
+        
+//        let fullAssessmentQuestionStep = YADLFullAssessmentStep(identifier: String(Identifier.YADLFullAssessmentStep), title: "YADL Image Description", text: "How hard is this activity for you on a difficult day?", image: UIImage(named: "round_shape"), answerFormat: answerFormat)
+        
+        let steps = (1...5).map { i in
+            return YADLFullAssessmentQuestionStep(identifier: String(Identifier.YADLFullAssessmentStep) + String(i), title: "YADL Image Description", text: "How hard is this activity for you on a difficult day?", image: UIImage(named: "round_shape"), answerFormat: answerFormat)
+        }
+        
+//        let questionStep = ORKQuestionStep(identifier: String(Identifier.TextChoiceQuestionStep), title: exampleQuestionText, answer: answerFormat)
+        
+//        questionStep.text = exampleDetailText
+        
+        return ORKOrderedTask(identifier: String(Identifier.YADLFullAssessmentTask), steps: steps)
     }
     
     /**

@@ -132,8 +132,26 @@ class TaskListViewController: UITableViewController, ORKTaskViewControllerDelega
         taskViewController.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func taskViewController(taskViewController: ORKTaskViewController, viewControllerForStep step: ORKStep) -> ORKStepViewController? {
+        if step.identifier.hasPrefix("YADLFullAssessmentStep") {
+//            let vc = YADLFullAssessmentQuestionStepViewController(step: step)
+//            let result = ORKStepResult(identifier: step.identifier)
+//            vc.result = result
+            
+            let vc = YADLStepViewController(nibName: "YADLStepViewController", bundle: nil)
+            vc.step = step
+            
+            vc.restorationIdentifier = step.identifier
+            vc.restorationClass = YADLFullAssessmentQuestionStepViewController.self
+            return vc
+        }
+        
+        return nil
+    }
+    
     func taskViewController(taskViewController: ORKTaskViewController, stepViewControllerWillAppear stepViewController: ORKStepViewController) {
         // Example data processing for the wait step.
+        print(stepViewController.step?.identifier)
         if stepViewController.step?.identifier == "WaitStepIndeterminate" ||
             stepViewController.step?.identifier == "WaitStep" ||
             stepViewController.step?.identifier == "LoginWaitStep" {
@@ -151,6 +169,15 @@ class TaskListViewController: UITableViewController, ORKTaskViewControllerDelega
                     NSRunLoop.mainRunLoop().addTimer(self.waitStepUpdateTimer!, forMode: NSRunLoopCommonModes)
                 }
             })
+        } else if stepViewController.step?.identifier != nil &&
+                    stepViewController.step!.identifier.hasPrefix("YADLFullAssessmentStep") {
+            
+            
+            if let stepViewController = stepViewController as? ORKQuestionStepViewController {
+                let customView = YADLFullAssessmentQuestionStepCustomView()
+                stepViewController.customQuestionView = customView
+            }
+            
         }
     }
     
