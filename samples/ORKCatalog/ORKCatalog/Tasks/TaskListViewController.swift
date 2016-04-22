@@ -142,7 +142,7 @@ class TaskListViewController: UITableViewController, ORKTaskViewControllerDelega
             vc.step = step
             
             vc.restorationIdentifier = step.identifier
-            vc.restorationClass = YADLFullAssessmentQuestionStepViewController.self
+            vc.restorationClass = YADLStepViewController.self
             return vc
         }
         
@@ -169,16 +169,7 @@ class TaskListViewController: UITableViewController, ORKTaskViewControllerDelega
                     NSRunLoop.mainRunLoop().addTimer(self.waitStepUpdateTimer!, forMode: NSRunLoopCommonModes)
                 }
             })
-        } else if stepViewController.step?.identifier != nil &&
-                    stepViewController.step!.identifier.hasPrefix("YADLFullAssessmentStep") {
-            
-            
-            if let stepViewController = stepViewController as? ORKQuestionStepViewController {
-                let customView = YADLFullAssessmentQuestionStepCustomView()
-                stepViewController.customQuestionView = customView
-            }
-            
-        }
+        } 
     }
     
     func delay(delay:Double, closure:()->()) {

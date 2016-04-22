@@ -52,6 +52,11 @@ class SystemSound {
     }
 }
 
+struct ImageAndDescription {
+    var imageTitle: String
+    var description: String
+}
+
 /**
     An enum that corresponds to a row displayed in a `TaskListViewController`.
 
@@ -926,22 +931,32 @@ enum TaskListRow: Int, CustomStringConvertible {
         
         // The text to display can be separate from the value coded for each choice:
         let textChoices = [
-            ORKTextChoice(text: textChoiceOneText, value: "easy"),
-            ORKTextChoice(text: textChoiceTwoText, value: "moderate"),
-            ORKTextChoice(text: textChoiceThreeText, value: "hard")
+            YADLTextChoice(text: textChoiceOneText, value: "easy", color: UIColor.greenColor()),
+            YADLTextChoice(text: textChoiceTwoText, value: "moderate", color: UIColor.yellowColor()),
+            YADLTextChoice(text: textChoiceThreeText, value: "hard", color: UIColor.redColor())
         ]
         
         let answerFormat = ORKAnswerFormat.choiceAnswerFormatWithStyle(.SingleChoice, textChoices: textChoices)
         
-//        let fullAssessmentQuestionStep = YADLFullAssessmentStep(identifier: String(Identifier.YADLFullAssessmentStep), title: "YADL Image Description", text: "How hard is this activity for you on a difficult day?", image: UIImage(named: "round_shape"), answerFormat: answerFormat)
+        let imagesAndDescriptions = [
+            ImageAndDescription(imageTitle: "Bathing", description: "Bathing"),
+            ImageAndDescription(imageTitle: "BedToChair", description: "Bed to Chair"),
+            ImageAndDescription(imageTitle: "Dressing", description: "Dressing"),
+            ImageAndDescription(imageTitle: "Eating", description: "Eating"),
+            ImageAndDescription(imageTitle: "Housework", description: "Housework")
+        ]
         
-        let steps = (1...5).map { i in
-            return YADLFullAssessmentQuestionStep(identifier: String(Identifier.YADLFullAssessmentStep) + String(i), title: "YADL Image Description", text: "How hard is this activity for you on a difficult day?", image: UIImage(named: "round_shape"), answerFormat: answerFormat)
+        var steps: [ORKStep] = imagesAndDescriptions.enumerate().map { (i, imagesAndDescription) in
+            return YADLFullAssessmentQuestionStep(identifier: String(Identifier.YADLFullAssessmentStep) + String(i), title: imagesAndDescription.description, text: "How hard is this activity for you on a difficult day?", image: UIImage(named: imagesAndDescription.imageTitle), answerFormat: answerFormat)
         }
         
-//        let questionStep = ORKQuestionStep(identifier: String(Identifier.TextChoiceQuestionStep), title: exampleQuestionText, answer: answerFormat)
+        // Add a summary step.
+        let summaryStep = ORKInstructionStep(identifier: String(Identifier.SummaryStep))
+        summaryStep.title = NSLocalizedString("Thanks", comment: "")
+        summaryStep.text = NSLocalizedString("Thank you for participating in this sample survey.", comment: "")
         
-//        questionStep.text = exampleDetailText
+        steps.append(summaryStep)
+        
         
         return ORKOrderedTask(identifier: String(Identifier.YADLFullAssessmentTask), steps: steps)
     }

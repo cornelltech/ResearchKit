@@ -16,7 +16,7 @@ class YADLFullAssessmentQuestionStep: ORKQuestionStep {
     var image: UIImage?
     
     func stepViewControllerClass() -> AnyClass {
-        return YADLFullAssessmentQuestionStepViewController.self
+        return YADLStepViewController.self
     }
 //
     init(identifier: String,
