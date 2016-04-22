@@ -16,6 +16,12 @@
 		485475D91CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 485475D71CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.xib */; };
 		4898C43E1CB4432200A7967E /* YADLFullAssessmentStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4898C43D1CB4432200A7967E /* YADLFullAssessmentStep.swift */; };
 		4898C4431CB5860000A7967E /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BC2A3CD81C58F1CA00DA64B7 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48DA574A1CCAA627003264DC /* YADLImageChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DA57491CCAA627003264DC /* YADLImageChoice.swift */; };
+		48DA574C1CCAB04D003264DC /* YADLSpotAssessmentStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DA574B1CCAB04D003264DC /* YADLSpotAssessmentStep.swift */; };
+		48DA574F1CCAB076003264DC /* YADLSpotAssessmentStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DA574D1CCAB076003264DC /* YADLSpotAssessmentStepViewController.swift */; };
+		48DA57501CCAB076003264DC /* YADLSpotAssessmentStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48DA574E1CCAB076003264DC /* YADLSpotAssessmentStepViewController.xib */; };
+		48DA57521CCAD172003264DC /* YADLSpotAssessmentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DA57511CCAD172003264DC /* YADLSpotAssessmentCollectionViewCell.swift */; };
+		48DA57541CCADF60003264DC /* YADLSpotAssessmentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48DA57531CCADF60003264DC /* YADLSpotAssessmentCollectionViewCell.xib */; };
 		863CCD821ACF545E009FD3B4 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 863CCD811ACF545E009FD3B4 /* HealthKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		86B89AA51AB2C0A5001626A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B89A9C1AB2C0A5001626A4 /* AppDelegate.swift */; };
 		B125E3D41B1BA47600FF8759 /* tap.aif in Resources */ = {isa = PBXBuildFile; fileRef = B125E3D31B1BA47600FF8759 /* tap.aif */; };
@@ -94,6 +100,12 @@
 		485475D71CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YADLFullAssessmentStepViewController.xib; sourceTree = "<group>"; };
 		4898C43A1CB4327A00A7967E /* ORKCatelog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ORKCatelog-Bridging-Header.h"; sourceTree = "<group>"; };
 		4898C43D1CB4432200A7967E /* YADLFullAssessmentStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLFullAssessmentStep.swift; sourceTree = "<group>"; };
+		48DA57491CCAA627003264DC /* YADLImageChoice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLImageChoice.swift; sourceTree = "<group>"; };
+		48DA574B1CCAB04D003264DC /* YADLSpotAssessmentStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLSpotAssessmentStep.swift; sourceTree = "<group>"; };
+		48DA574D1CCAB076003264DC /* YADLSpotAssessmentStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLSpotAssessmentStepViewController.swift; sourceTree = "<group>"; };
+		48DA574E1CCAB076003264DC /* YADLSpotAssessmentStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YADLSpotAssessmentStepViewController.xib; sourceTree = "<group>"; };
+		48DA57511CCAD172003264DC /* YADLSpotAssessmentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLSpotAssessmentCollectionViewCell.swift; sourceTree = "<group>"; };
+		48DA57531CCADF60003264DC /* YADLSpotAssessmentCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YADLSpotAssessmentCollectionViewCell.xib; sourceTree = "<group>"; };
 		863CCD811ACF545E009FD3B4 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		863CCD831ACF545E009FD3B4 /* ORKCatalog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ORKCatalog.entitlements; sourceTree = "<group>"; };
 		869230BE1AAA890A00BFE11B /* ORKCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ORKCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,8 +171,14 @@
 			isa = PBXGroup;
 			children = (
 				4898C43D1CB4432200A7967E /* YADLFullAssessmentStep.swift */,
+				48DA574B1CCAB04D003264DC /* YADLSpotAssessmentStep.swift */,
+				48DA574D1CCAB076003264DC /* YADLSpotAssessmentStepViewController.swift */,
+				48DA574E1CCAB076003264DC /* YADLSpotAssessmentStepViewController.xib */,
+				48DA57511CCAD172003264DC /* YADLSpotAssessmentCollectionViewCell.swift */,
+				48DA57531CCADF60003264DC /* YADLSpotAssessmentCollectionViewCell.xib */,
 				485475D61CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.swift */,
 				4838A9971CC9776E009CB72A /* YADLTextChoice.swift */,
+				48DA57491CCAA627003264DC /* YADLImageChoice.swift */,
 				485475D71CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.xib */,
 			);
 			name = YADL;
@@ -327,10 +345,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				485475D91CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.xib in Resources */,
+				48DA57501CCAB076003264DC /* YADLSpotAssessmentStepViewController.xib in Resources */,
 				3E39BA001ABF683F00C2ABE5 /* Images.xcassets in Resources */,
 				3E39B9FB1ABF682D00C2ABE5 /* Main.storyboard in Resources */,
 				B125E3D41B1BA47600FF8759 /* tap.aif in Resources */,
 				3E39B9FE1ABF683700C2ABE5 /* LaunchScreen.xib in Resources */,
+				48DA57541CCADF60003264DC /* YADLSpotAssessmentCollectionViewCell.xib in Resources */,
 				3ED967B81AC13D37007E2D83 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,10 +366,14 @@
 				BC9A273E1B82741900BDA84D /* ResultViewController.swift in Sources */,
 				BC9A27441B82742600BDA84D /* ChartListViewController.swift in Sources */,
 				BC9A27431B82742600BDA84D /* ChartDataSources.swift in Sources */,
+				48DA574A1CCAA627003264DC /* YADLImageChoice.swift in Sources */,
 				BC9A273D1B82741900BDA84D /* ResultTableViewProviders.swift in Sources */,
+				48DA574F1CCAB076003264DC /* YADLSpotAssessmentStepViewController.swift in Sources */,
 				BC9A273F1B82741900BDA84D /* TextImageTableViewCell.swift in Sources */,
+				48DA57521CCAD172003264DC /* YADLSpotAssessmentCollectionViewCell.swift in Sources */,
 				86B89AA51AB2C0A5001626A4 /* AppDelegate.swift in Sources */,
 				BC9A273C1B82741900BDA84D /* ImageTableViewCell.swift in Sources */,
+				48DA574C1CCAB04D003264DC /* YADLSpotAssessmentStep.swift in Sources */,
 				BC9A27351B82740D00BDA84D /* TaskListViewController.swift in Sources */,
 				485475D81CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.swift in Sources */,
 				4838A9981CC9776E009CB72A /* YADLTextChoice.swift in Sources */,

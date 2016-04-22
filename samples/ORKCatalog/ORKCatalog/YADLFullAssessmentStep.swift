@@ -20,10 +20,10 @@ class YADLFullAssessmentStep: ORKQuestionStep {
     }
 //
     init(identifier: String,
-         title: String?,
-         text: String?,
-         image: UIImage?,
-         answerFormat: ORKAnswerFormat? ) {
+         title: String,
+         text: String,
+         image: UIImage,
+         answerFormat: ORKAnswerFormat ) {
         
 //        super.init(identifier: identifier, title: title, text: text, answer: answerFormat)
         super.init(identifier: identifier)

@@ -83,6 +83,7 @@ enum TaskListRow: Int, CustomStringConvertible {
     case ImageCapture
     case Wait
     case FullAssessment
+    case SpotAssessment
     
     case EligibilityTask
     case Consent
@@ -138,6 +139,7 @@ enum TaskListRow: Int, CustomStringConvertible {
                     .ImageCapture,
                     .Wait,
                     .FullAssessment,
+                    .SpotAssessment,
                 ]),
             TaskListRowSection(title: "Onboarding", rows:
                 [
@@ -220,6 +222,9 @@ enum TaskListRow: Int, CustomStringConvertible {
             
         case .FullAssessment:
             return NSLocalizedString("YADL Full Assessment", comment: "")
+            
+        case .SpotAssessment:
+            return NSLocalizedString("YADL Spot Assessment", comment: "")
 
         case .EligibilityTask:
             return NSLocalizedString("Eligibility Task Example", comment: "")
@@ -365,6 +370,8 @@ enum TaskListRow: Int, CustomStringConvertible {
         //YADL
         case YADLFullAssessmentTask
         case YADLFullAssessmentStep
+        case YADLSpotAssessmentTask
+        case YADLSpotAssessmentStep
         
         // Task with an example of waiting.
         case WaitTask
@@ -476,6 +483,9 @@ enum TaskListRow: Int, CustomStringConvertible {
             
         case .FullAssessment:
             return fullAssessmentTask
+            
+        case .SpotAssessment:
+            return spotAssessmentTask
         
         case .EligibilityTask:
             return eligibilityTask
@@ -947,7 +957,7 @@ enum TaskListRow: Int, CustomStringConvertible {
         ]
         
         var steps: [ORKStep] = imagesAndDescriptions.enumerate().map { (i, imagesAndDescription) in
-            return YADLFullAssessmentStep(identifier: String(Identifier.YADLFullAssessmentStep) + String(i), title: imagesAndDescription.description, text: "How hard is this activity for you on a difficult day?", image: UIImage(named: imagesAndDescription.imageTitle), answerFormat: answerFormat)
+            return YADLFullAssessmentStep(identifier: String(Identifier.YADLFullAssessmentStep) + String(i), title: imagesAndDescription.description, text: "How hard is this activity for you on a difficult day?", image: UIImage(named: imagesAndDescription.imageTitle)!, answerFormat: answerFormat)
         }
         
         // Add a summary step.
@@ -959,6 +969,37 @@ enum TaskListRow: Int, CustomStringConvertible {
         
         
         return ORKOrderedTask(identifier: String(Identifier.YADLFullAssessmentTask), steps: steps)
+    }
+    
+    private var spotAssessmentTask: ORKTask {
+        let imagesAndDescriptions = [
+            ImageAndDescription(imageTitle: "Bathing", description: "Bathing"),
+            ImageAndDescription(imageTitle: "BedToChair", description: "Bed to Chair"),
+            ImageAndDescription(imageTitle: "Dressing", description: "Dressing"),
+            ImageAndDescription(imageTitle: "Eating", description: "Eating"),
+            ImageAndDescription(imageTitle: "Housework", description: "Housework")
+        ]
+        
+        let imageChoices = imagesAndDescriptions.map { imageAndDescription in
+            
+            return ORKImageChoice(normalImage: UIImage(named: imageAndDescription.imageTitle), selectedImage: nil, text: nil, value: imageAndDescription.description)
+            
+        }
+        
+        let answerFormat = ORKAnswerFormat.choiceAnswerFormatWithImageChoices(imageChoices)
+        
+        let summaryStep = ORKInstructionStep(identifier: String(Identifier.SummaryStep))
+        summaryStep.title = NSLocalizedString("Thanks", comment: "")
+        summaryStep.text = NSLocalizedString("Thank you for participating in this sample survey.", comment: "")
+        
+        let steps = [
+            YADLSpotAssessmentStep(identifier: String(Identifier.YADLSpotAssessmentStep), title: "Which activities did you have trouble with today?", answerFormat: answerFormat),
+            summaryStep
+        ]
+        
+        return ORKOrderedTask(identifier: String(Identifier.YADLSpotAssessmentTask), steps: steps)
+        
+        
     }
     
     /**

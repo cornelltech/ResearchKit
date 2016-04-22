@@ -133,16 +133,21 @@ class TaskListViewController: UITableViewController, ORKTaskViewControllerDelega
     }
     
     func taskViewController(taskViewController: ORKTaskViewController, viewControllerForStep step: ORKStep) -> ORKStepViewController? {
-        if step.identifier.hasPrefix("YADLFullAssessmentStep") {
-//            let vc = YADLFullAssessmentQuestionStepViewController(step: step)
-//            let result = ORKStepResult(identifier: step.identifier)
-//            vc.result = result
+        if let step = step as? YADLFullAssessmentStep {
 
             let vc = YADLFullAssessmentStepViewController(nibName: "YADLFullAssessmentStepViewController", bundle: nil)
             vc.step = step
             
             vc.restorationIdentifier = step.identifier
             vc.restorationClass = YADLFullAssessmentStepViewController.self
+            return vc
+        }
+        else if let step = step as? YADLSpotAssessmentStep {
+            let vc = YADLSpotAssessmentStepViewController(nibName: "YADLSpotAssessmentStepViewController", bundle: nil)
+            vc.step = step
+            
+            vc.restorationIdentifier = step.identifier
+            vc.restorationClass = YADLSpotAssessmentStepViewController.self
             return vc
         }
         
