@@ -9,14 +9,14 @@
 import UIKit
 import ResearchKit
 
-class YADLFullAssessmentQuestionStep: ORKQuestionStep {
+class YADLFullAssessmentStep: ORKQuestionStep {
 
 //    var answerFormat: ORKAnswerFormat?
     //image
     var image: UIImage?
     
     func stepViewControllerClass() -> AnyClass {
-        return YADLStepViewController.self
+        return YADLFullAssessmentStepViewController.self
     }
 //
     init(identifier: String,

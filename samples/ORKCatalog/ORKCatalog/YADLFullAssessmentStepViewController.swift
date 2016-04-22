@@ -1,5 +1,5 @@
 //
-//  YADLStepViewController.swift
+//  YADLFullAssessmentStepViewController.swift
 //  ORKCatalog
 //
 //  Created by James Kizer on 4/6/16.
@@ -9,7 +9,7 @@
 import UIKit
 import ResearchKit
 
-class YADLStepViewController: ORKStepViewController {
+class YADLFullAssessmentStepViewController: ORKStepViewController {
 
     @IBOutlet weak var activityImageView: UIImageView!
     @IBOutlet weak var activityDescriptionLabel: UILabel!
@@ -31,7 +31,7 @@ class YADLStepViewController: ORKStepViewController {
     override var result: ORKStepResult? {
         let parentResult = super.result
         if let answer = self.answer {
-            let step = self.step as? YADLFullAssessmentQuestionStep
+            let step = self.step as? YADLFullAssessmentStep
             
             let questionResult = ORKChoiceQuestionResult(identifier: step!.identifier)
             questionResult.choiceAnswers = [answer]
@@ -47,10 +47,8 @@ class YADLStepViewController: ORKStepViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-//        self.view.backgroundColor = UIColor.lightGrayColor()
-        
-        if let step = self.step as? YADLFullAssessmentQuestionStep {
+        // Do any additional setup after loading the view.  
+        if let step = self.step as? YADLFullAssessmentStep {
             self.activityImageView.image = step.image
             self.activityDescriptionLabel.text = step.title
             //setupButtons
@@ -66,7 +64,7 @@ class YADLStepViewController: ORKStepViewController {
         
     }
     
-    func setupQuestionTextView(step: YADLFullAssessmentQuestionStep) {
+    func setupQuestionTextView(step: YADLFullAssessmentStep) {
         
         self.questionTextView.text = step.text
         self.questionTextView.textAlignment = NSTextAlignment.Center
@@ -86,7 +84,7 @@ class YADLStepViewController: ORKStepViewController {
             self.buttons = nil
             self.buttonHeightContraints = nil
         }
-        if let step = self.step as? YADLFullAssessmentQuestionStep {
+        if let step = self.step as? YADLFullAssessmentStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
                 
                 self.buttons = answerFormat.textChoices.enumerate().map { (i, textChoice) in
@@ -103,7 +101,7 @@ class YADLStepViewController: ORKStepViewController {
                     let heightContraint = NSLayoutConstraint(item: button, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.buttonHeight)
                     button.addConstraint(heightContraint)
                     
-                    button.addTarget(self, action: #selector(YADLStepViewController.textChoiceButtonSelected(_:)), forControlEvents: .TouchUpInside)
+                    button.addTarget(self, action: #selector(YADLFullAssessmentStepViewController.textChoiceButtonSelected(_:)), forControlEvents: .TouchUpInside)
                     
                     
                     return button
@@ -120,16 +118,9 @@ class YADLStepViewController: ORKStepViewController {
         }
     }
     
-    
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     func textChoiceAtIndex(index: Int) -> ORKTextChoice? {
         print(self.step)
-        if let step = self.step as? YADLFullAssessmentQuestionStep {
+        if let step = self.step as? YADLFullAssessmentStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
                 return answerFormat.textChoices[index]
             }
@@ -156,14 +147,5 @@ class YADLStepViewController: ORKStepViewController {
     @IBAction func skipButtonPressed(sender: AnyObject) {
         self.goForward()
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

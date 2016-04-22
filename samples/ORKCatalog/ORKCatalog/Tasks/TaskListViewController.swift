@@ -137,12 +137,12 @@ class TaskListViewController: UITableViewController, ORKTaskViewControllerDelega
 //            let vc = YADLFullAssessmentQuestionStepViewController(step: step)
 //            let result = ORKStepResult(identifier: step.identifier)
 //            vc.result = result
-            
-            let vc = YADLStepViewController(nibName: "YADLStepViewController", bundle: nil)
+
+            let vc = YADLFullAssessmentStepViewController(nibName: "YADLFullAssessmentStepViewController", bundle: nil)
             vc.step = step
             
             vc.restorationIdentifier = step.identifier
-            vc.restorationClass = YADLStepViewController.self
+            vc.restorationClass = YADLFullAssessmentStepViewController.self
             return vc
         }
         

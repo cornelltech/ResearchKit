@@ -947,7 +947,7 @@ enum TaskListRow: Int, CustomStringConvertible {
         ]
         
         var steps: [ORKStep] = imagesAndDescriptions.enumerate().map { (i, imagesAndDescription) in
-            return YADLFullAssessmentQuestionStep(identifier: String(Identifier.YADLFullAssessmentStep) + String(i), title: imagesAndDescription.description, text: "How hard is this activity for you on a difficult day?", image: UIImage(named: imagesAndDescription.imageTitle), answerFormat: answerFormat)
+            return YADLFullAssessmentStep(identifier: String(Identifier.YADLFullAssessmentStep) + String(i), title: imagesAndDescription.description, text: "How hard is this activity for you on a difficult day?", image: UIImage(named: imagesAndDescription.imageTitle), answerFormat: answerFormat)
         }
         
         // Add a summary step.
