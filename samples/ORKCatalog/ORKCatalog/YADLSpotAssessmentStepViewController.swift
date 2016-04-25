@@ -14,15 +14,76 @@ struct YADLSpotAssessmentAnswerStruct {
     var selected: Bool
 }
 
-class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     @IBOutlet weak var questionTextView: UITextView!
     @IBOutlet weak var imagesCollectionView: UICollectionView!
-    @IBOutlet weak var nothingToReportButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var nothingToReportButton: UIButton!
     
     
-//    var answerArray: [YADLSpotAssessmentAnswerStruct]?
+    // Params for user to configure
+    
+    var submitButtonColor: UIColor = UIColor.blueColor() {
+        didSet {
+            if let submitButton = self.submitButton {
+                submitButton.backgroundColor = submitButtonColor
+            }
+        }
+    }
+    
+    var nothingToReportButtonColor: UIColor = UIColor.yellowColor() {
+        didSet {
+            if let nothingToReportButton = self.nothingToReportButton {
+                nothingToReportButton.backgroundColor = nothingToReportButtonColor
+            }
+        }
+    }
+    
+    var activityCellSelectedColor:UIColor = UIColor.blueColor() {
+        didSet {
+            if let collectionView = self.imagesCollectionView {
+                collectionView.reloadData()
+            }
+        }
+    }
+    
+    var activityCellSelectedOverlayImage: UIImage? = nil {
+        didSet {
+            if let collectionView = self.imagesCollectionView {
+                collectionView.reloadData()
+            }
+        }
+    }
+    
+    //collection view background color
+    var activityCollectionViewBackgroundColor = UIColor.clearColor() {
+        didSet {
+            if let collectionView = self.imagesCollectionView {
+                collectionView.backgroundColor = activityCollectionViewBackgroundColor
+            }
+        }
+    }
+    
+    //collectionViewLayout properties
+    var activitiesPerRow = 3 {
+        didSet {
+            if let collectionView = self.imagesCollectionView {
+                collectionView.collectionViewLayout.invalidateLayout()
+            }
+        }
+    }
+    
+    var activityMinSpacing: CGFloat = 10.0 {
+        didSet {
+            if let collectionView = self.imagesCollectionView {
+                collectionView.collectionViewLayout.invalidateLayout()
+            }
+        }
+    }
+    
+    
+    
     var answerDictionary: [Int: YADLSpotAssessmentAnswerStruct]?
     
     //whenver step is set, initialize the answerArray
@@ -35,6 +96,10 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
             self.answerDictionary = [Int: YADLSpotAssessmentAnswerStruct]()
             answerFormat.imageChoices.forEach { imageChoice in
                 self.answerDictionary![imageChoice.value.hash] = YADLSpotAssessmentAnswerStruct(identifier: imageChoice.value, selected: false)
+            }
+            
+            if let questionTextView = self.questionTextView {
+                questionTextView.text = step.title
             }
         }
     }
@@ -84,15 +149,11 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
         
         self.imagesCollectionView.delegate = self
         self.imagesCollectionView.dataSource = self
-        self.imagesCollectionView.backgroundColor = UIColor.clearColor()
+        self.imagesCollectionView.backgroundColor = self.activityCollectionViewBackgroundColor
+        
+        self.submitButton.backgroundColor = self.submitButtonColor
+        self.nothingToReportButton.backgroundColor = nothingToReportButtonColor
 
-        // Do any additional setup after loading the view.
-        self.nothingToReportButton.backgroundColor = UIColor.yellowColor()
-        self.nothingToReportButton.titleLabel?.textColor = UIColor.whiteColor()
-        
-        self.submitButton.backgroundColor = UIColor.blueColor()
-        self.submitButton.titleLabel?.textColor = UIColor.whiteColor()
-        
         if let step = self.step as? YADLSpotAssessmentStep {
             self.questionTextView.text = step.title
         }
@@ -100,20 +161,18 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
         self.updateUI()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     func updateUI() {
-        //nothing to report button is enabled IFF there are no selected images
-        //submit button is enabled IFF there are 1 or more selected images
+        //nothing to report button is visible IFF there are no selected images
+        //submit button is visible IFF there are 1 or more selected images
         //submit button title contains the number of selected images
         if let selectedAnswers = self.selectedAnswers() {
-            self.nothingToReportButton.enabled = (selectedAnswers.count == 0)
-            self.submitButton.enabled = (selectedAnswers.count > 0)
-            self.submitButton.setTitle("Submit (\(selectedAnswers.count))", forState: UIControlState.Normal)
-            print("number of selected answers: \(selectedAnswers.count)")
+            
+            if selectedAnswers.count > 0 {
+                self.submitButton.setTitle("Submit (\(selectedAnswers.count))", forState: UIControlState.Normal)
+            }
+            
+            self.submitButton.hidden = !(selectedAnswers.count > 0)
+            self.nothingToReportButton.hidden = (selectedAnswers.count > 0)
         }
         
         //reload collection view
@@ -151,6 +210,10 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
         }
         yadlCell.activityImage = imageChoice.normalStateImage
         yadlCell.selected = self.getSelectedForValue(imageChoice.value)!
+        yadlCell.selectedBackgroundColor = self.activityCellSelectedColor
+        if let selectedImage = self.activityCellSelectedOverlayImage {
+            yadlCell.selectedOverlayImage = selectedImage
+        }
         
         return cell
     }
@@ -162,19 +225,28 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
         self.setSelectedForValue(imageChoice.value, selected: !self.getSelectedForValue(imageChoice.value)!)
         
         self.updateUI()
-        
     }
     
-    @IBAction func nothingToReportSelected(sender: AnyObject) {
-        print("nothing to report selected")
-        if let delegate = self.delegate {
-            delegate.stepViewControllerResultDidChange(self)
-        }
-        self.goForward()
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let collectionViewWidth = collectionView.bounds.width
+        let cellWidth = (collectionViewWidth - CGFloat(self.activitiesPerRow + 1)*self.activityMinSpacing) / CGFloat(self.activitiesPerRow)
+        return CGSize(width: cellWidth, height: cellWidth)
     }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: self.activityMinSpacing, left: self.activityMinSpacing, bottom: self.activityMinSpacing, right: self.activityMinSpacing)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return self.activityMinSpacing
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return self.activityMinSpacing
+    }
+    
     
     @IBAction func submitSelected(sender: AnyObject) {
-        print("submit selected")
         if let delegate = self.delegate {
             delegate.stepViewControllerResultDidChange(self)
         }

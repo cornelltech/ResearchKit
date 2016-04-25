@@ -16,7 +16,6 @@
 		485475D91CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 485475D71CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.xib */; };
 		4898C43E1CB4432200A7967E /* YADLFullAssessmentStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4898C43D1CB4432200A7967E /* YADLFullAssessmentStep.swift */; };
 		4898C4431CB5860000A7967E /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BC2A3CD81C58F1CA00DA64B7 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		48DA574A1CCAA627003264DC /* YADLImageChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DA57491CCAA627003264DC /* YADLImageChoice.swift */; };
 		48DA574C1CCAB04D003264DC /* YADLSpotAssessmentStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DA574B1CCAB04D003264DC /* YADLSpotAssessmentStep.swift */; };
 		48DA574F1CCAB076003264DC /* YADLSpotAssessmentStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DA574D1CCAB076003264DC /* YADLSpotAssessmentStepViewController.swift */; };
 		48DA57501CCAB076003264DC /* YADLSpotAssessmentStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48DA574E1CCAB076003264DC /* YADLSpotAssessmentStepViewController.xib */; };
@@ -100,7 +99,6 @@
 		485475D71CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YADLFullAssessmentStepViewController.xib; sourceTree = "<group>"; };
 		4898C43A1CB4327A00A7967E /* ORKCatelog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ORKCatelog-Bridging-Header.h"; sourceTree = "<group>"; };
 		4898C43D1CB4432200A7967E /* YADLFullAssessmentStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLFullAssessmentStep.swift; sourceTree = "<group>"; };
-		48DA57491CCAA627003264DC /* YADLImageChoice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLImageChoice.swift; sourceTree = "<group>"; };
 		48DA574B1CCAB04D003264DC /* YADLSpotAssessmentStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLSpotAssessmentStep.swift; sourceTree = "<group>"; };
 		48DA574D1CCAB076003264DC /* YADLSpotAssessmentStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLSpotAssessmentStepViewController.swift; sourceTree = "<group>"; };
 		48DA574E1CCAB076003264DC /* YADLSpotAssessmentStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YADLSpotAssessmentStepViewController.xib; sourceTree = "<group>"; };
@@ -178,7 +176,6 @@
 				48DA57531CCADF60003264DC /* YADLSpotAssessmentCollectionViewCell.xib */,
 				485475D61CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.swift */,
 				4838A9971CC9776E009CB72A /* YADLTextChoice.swift */,
-				48DA57491CCAA627003264DC /* YADLImageChoice.swift */,
 				485475D71CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.xib */,
 			);
 			name = YADL;
@@ -366,7 +363,6 @@
 				BC9A273E1B82741900BDA84D /* ResultViewController.swift in Sources */,
 				BC9A27441B82742600BDA84D /* ChartListViewController.swift in Sources */,
 				BC9A27431B82742600BDA84D /* ChartDataSources.swift in Sources */,
-				48DA574A1CCAA627003264DC /* YADLImageChoice.swift in Sources */,
 				BC9A273D1B82741900BDA84D /* ResultTableViewProviders.swift in Sources */,
 				48DA574F1CCAB076003264DC /* YADLSpotAssessmentStepViewController.swift in Sources */,
 				BC9A273F1B82741900BDA84D /* TextImageTableViewCell.swift in Sources */,

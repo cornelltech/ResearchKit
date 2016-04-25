@@ -11,21 +11,19 @@ import ResearchKit
 
 class YADLFullAssessmentStep: ORKQuestionStep {
 
-//    var answerFormat: ORKAnswerFormat?
-    //image
     var image: UIImage?
     
     func stepViewControllerClass() -> AnyClass {
         return YADLFullAssessmentStepViewController.self
     }
-//
+
     init(identifier: String,
          title: String,
          text: String,
          image: UIImage,
          answerFormat: ORKAnswerFormat ) {
         
-//        super.init(identifier: identifier, title: title, text: text, answer: answerFormat)
+
         super.init(identifier: identifier)
         self.title = title
         self.text = text

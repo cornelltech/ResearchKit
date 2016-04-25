@@ -27,17 +27,17 @@
                     <rect key="frame" x="0.0" y="300" width="600" height="300"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity Description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvS-cY-B2C" userLabel="Activity Description Label">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="28"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
                             <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="28" id="PVl-ss-4ee"/>
+                                <constraint firstAttribute="height" constant="40" id="PVl-ss-4ee"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="How hard was this activity for you today?" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmk-43-I9y" userLabel="Question Text View">
-                            <rect key="frame" x="0.0" y="28" width="600" height="60"/>
+                            <rect key="frame" x="0.0" y="40" width="600" height="60"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="m3g-PS-5wS"/>
@@ -60,7 +60,7 @@
                             </items>
                         </toolbar>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ciM-dB-be7">
-                            <rect key="frame" x="8" y="88" width="584" height="168"/>
+                            <rect key="frame" x="8" y="100" width="584" height="156"/>
                         </stackView>
                     </subviews>
                     <constraints>

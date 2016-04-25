@@ -11,7 +11,6 @@ import ResearchKit
 
 class YADLSpotAssessmentStep: ORKQuestionStep {
 
-    
     func stepViewControllerClass() -> AnyClass {
         return YADLSpotAssessmentStepViewController.self
     }

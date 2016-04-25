@@ -48,20 +48,17 @@ class YADLFullAssessmentStepViewController: ORKStepViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.  
-        if let step = self.step as? YADLFullAssessmentStep {
-            self.activityImageView.image = step.image
-            self.activityDescriptionLabel.text = step.title
-            //setupButtons
-            self.setupDifficultyButtons()
-            
-            self.setupQuestionTextView(step)
-            
-            
-        }
-        else {
-            //should throw here
-        }
+        guard let step = self.step as? YADLFullAssessmentStep
+            else {
+                fatalError("Step property should have been set by now!")
+            }
         
+        self.activityImageView.image = step.image
+        self.activityDescriptionLabel.text = step.title
+        //setupButtons
+        self.setupDifficultyButtons()
+        
+        self.setupQuestionTextView(step)
     }
     
     func setupQuestionTextView(step: YADLFullAssessmentStep) {
@@ -77,6 +74,7 @@ class YADLFullAssessmentStepViewController: ORKStepViewController {
         
         self.buttonStackView.layoutMarginsRelativeArrangement = true
         
+        //clear existing buttons, if any
         if let buttons = self.buttons {
             buttons.forEach { button in
                 button.removeFromSuperview()
@@ -84,60 +82,68 @@ class YADLFullAssessmentStepViewController: ORKStepViewController {
             self.buttons = nil
             self.buttonHeightContraints = nil
         }
-        if let step = self.step as? YADLFullAssessmentStep {
-            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
-                
-                self.buttons = answerFormat.textChoices.enumerate().map { (i, textChoice) in
-                    let button = UIButton(type: UIButtonType.System)
-                    button.setTitle(textChoice.text, forState: UIControlState.Normal)
-                    
-                    if let yadlTextChoice = textChoice as? YADLTextChoice {
-                        button.setTitleColor(yadlTextChoice.color, forState: .Normal)
-                    }
-                    
-//                    button.layer.cornerRadius = 10
-                    button.layer.borderWidth = 1
-                    button.layer.borderColor = button.titleColorForState(UIControlState.Normal)?.CGColor
-                    let heightContraint = NSLayoutConstraint(item: button, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.buttonHeight)
-                    button.addConstraint(heightContraint)
-                    
-                    button.addTarget(self, action: #selector(YADLFullAssessmentStepViewController.textChoiceButtonSelected(_:)), forControlEvents: .TouchUpInside)
-                    
-                    
-                    return button
-                }
-                
-                self.buttonHeightContraints = self.buttons!.map { button in
-                    let constraint: NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.buttonHeight)
-                    button.addConstraint(constraint)
-                    return constraint
-                }
-                
-                self.buttons?.forEach(self.buttonStackView.addArrangedSubview)
-            }
+        
+        guard let step = self.step as? YADLFullAssessmentStep
+            else {
+                fatalError("Step property should have been set by now!")
         }
+        
+        guard let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat
+            else {
+                fatalError("Answer Format Type must be ORKTextChoiceAnswerFormat")
+        }
+        
+        self.buttons = answerFormat.textChoices.enumerate().map { (i, textChoice) in
+            let button = UIButton(type: UIButtonType.System)
+            button.setTitle(textChoice.text, forState: .Normal)
+            
+            if let yadlTextChoice = textChoice as? YADLTextChoice {
+                button.setTitleColor(yadlTextChoice.color, forState: .Normal)
+            }
+            
+            //                    button.layer.cornerRadius = 10
+            button.layer.borderWidth = 1
+            button.layer.borderColor = button.titleColorForState(.Normal)?.CGColor
+            let heightContraint = NSLayoutConstraint(item: button, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.buttonHeight)
+            button.addConstraint(heightContraint)
+            
+            button.addTarget(self, action: #selector(YADLFullAssessmentStepViewController.textChoiceButtonSelected(_:)), forControlEvents: .TouchUpInside)
+            
+            return button
+        }
+        
+        self.buttonHeightContraints = self.buttons!.map { button in
+            let constraint: NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.buttonHeight)
+            button.addConstraint(constraint)
+            return constraint
+        }
+        
+        self.buttons?.forEach(self.buttonStackView.addArrangedSubview)
     }
     
     func textChoiceAtIndex(index: Int) -> ORKTextChoice? {
-        print(self.step)
-        if let step = self.step as? YADLFullAssessmentStep {
-            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
-                return answerFormat.textChoices[index]
+        
+        guard let step = self.step as? YADLFullAssessmentStep,
+            let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat
+            else {
+                return nil
             }
-        }
-        return nil
+        
+        return answerFormat.textChoices[index]
     }
+    
     
     func textChoiceButtonSelected(button: UIButton) {
         
         
-        if let buttonIndex = self.buttons?.indexOf(button) {
-            if let textChoice = self.textChoiceAtIndex(buttonIndex) {
-                print("Selected \(textChoice.text) - \(textChoice.value)")
-                self.answer = textChoice.value
-                if let delegate = self.delegate {
-                    delegate.stepViewControllerResultDidChange(self)
-                }
+        if let buttonIndex = self.buttons?.indexOf(button),
+            let textChoice = self.textChoiceAtIndex(buttonIndex) {
+            
+            print("Selected \(textChoice.text) - \(textChoice.value)")
+            self.answer = textChoice.value
+            
+            if let delegate = self.delegate {
+                delegate.stepViewControllerResultDidChange(self)
             }
         }
         self.goForward()
