@@ -16,6 +16,22 @@ class YADLFullAssessmentStepViewController: ORKStepViewController {
     @IBOutlet weak var questionTextView: UITextView!
     @IBOutlet weak var buttonStackView: UIStackView!
     
+    
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    override convenience init(step: ORKStep?) {
+        self.init(nibName: "YADLFullAssessmentStepViewController", bundle: nil)
+        self.step = step
+        self.restorationIdentifier = step!.identifier
+        self.restorationClass = YADLFullAssessmentStepViewController.self
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var buttons: [UIButton]?
     var buttonHeightContraints: [NSLayoutConstraint]?
     var buttonHeight: CGFloat = 60.0 {

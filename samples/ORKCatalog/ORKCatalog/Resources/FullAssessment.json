@@ -1,0 +1,51 @@
+{
+    "prompt": "How hard is this activity for you on a difficult day?",
+    "choices": [
+        {
+            "text": "Easy",
+            "value": "easy",
+            "color": "#7FEE7D"
+        },
+        {
+            "text": "Moderate",
+            "value": "moderate",
+            "color": "#FCC103"
+        },
+        {
+            "text": "Hard",
+            "value": "hard",
+            "color": "#FF3838"
+        }
+    ],
+    "activities": [
+        {
+            "imageTitle": "Bathing",
+            "description": "Bathing",
+            "identifier": "Bathing"
+        },
+        {
+            "imageTitle": "BedToChair",
+            "description": "Bed To Chair",
+            "identifier": "BedToChair"
+        },
+        {
+            "imageTitle": "Dressing",
+            "description": "Dressing",
+            "identifier": "Dressing"
+        },
+        {
+            "imageTitle": "Eating",
+            "description": "Eating",
+            "identifier": "Eating"
+        },
+        {
+            "imageTitle": "Housework",
+            "description": "Housework",
+            "identifier": "Housework"
+        }
+    ],
+    "summary": {
+        "title": "Thanks",
+        "text": "Thank you for participating in the YADL Full Assessment"
+    }
+}

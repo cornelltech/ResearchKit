@@ -11,6 +11,14 @@ import ResearchKit
 
 class YADLSpotAssessmentStep: ORKQuestionStep {
 
+    var submitButtonColor: UIColor?
+    var nothingToReportButtonColor: UIColor?
+    var activityCellSelectedColor:UIColor?
+    var activityCellSelectedOverlayImage: UIImage?
+    var activityCollectionViewBackgroundColor: UIColor?
+    var activitiesPerRow: Int?
+    var activityMinSpacing: CGFloat?
+    
     func stepViewControllerClass() -> AnyClass {
         return YADLSpotAssessmentStepViewController.self
     }

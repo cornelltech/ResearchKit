@@ -22,6 +22,22 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
     @IBOutlet weak var nothingToReportButton: UIButton!
     
     
+    
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    override convenience init(step: ORKStep?) {
+        self.init(nibName: "YADLSpotAssessmentStepViewController", bundle: nil)
+        self.step = step
+        self.restorationIdentifier = step!.identifier
+        self.restorationClass = YADLSpotAssessmentStepViewController.self
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // Params for user to configure
     
     var submitButtonColor: UIColor = UIColor.blueColor() {
@@ -101,6 +117,36 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
             if let questionTextView = self.questionTextView {
                 questionTextView.text = step.title
             }
+            
+            self.setupOptionsFromStep(step)
+        }
+    }
+    
+    func setupOptionsFromStep(step: YADLSpotAssessmentStep) {
+        if let submitButtonColor = step.submitButtonColor {
+            self.submitButtonColor = submitButtonColor
+        }
+        
+        if let nothingToReportButtonColor = step.nothingToReportButtonColor {
+            self.nothingToReportButtonColor = nothingToReportButtonColor
+        }
+        
+        if let activityCellSelectedColor = step.activityCellSelectedColor {
+            self.activityCellSelectedColor = activityCellSelectedColor
+        }
+        
+        self.activityCellSelectedOverlayImage = step.activityCellSelectedOverlayImage
+        
+        if let activityCollectionViewBackgroundColor = step.activityCollectionViewBackgroundColor {
+            self.activityCollectionViewBackgroundColor = activityCollectionViewBackgroundColor
+        }
+        
+        if let activitiesPerRow = step.activitiesPerRow {
+            self.activitiesPerRow = activitiesPerRow
+        }
+        
+        if let activityMinSpacing = step.activityMinSpacing {
+            self.activityMinSpacing = activityMinSpacing
         }
     }
     
@@ -156,6 +202,7 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
 
         if let step = self.step as? YADLSpotAssessmentStep {
             self.questionTextView.text = step.title
+            self.setupOptionsFromStep(step)
         }
         
         self.updateUI()

@@ -1,0 +1,44 @@
+{
+    "identifier": "YADL Spot Identifier",
+    "prompt": "Which activities did you have trouble with today?",
+    "options": {
+        "submitButtonColor": "#FCC103",
+        "nothingToReportButtonColor": "#FCC103",
+        "activityCellSelectedColor": "#FCC103",
+        "activityCellSelectedOverlayImageTitle": "first_tab",
+        "activityCollectionViewBackgroundColor": "#000000",
+        "activitiesPerRow": 3,
+        "activityMinSpacing": 10.0
+    },
+    "activities": [
+        {
+            "imageTitle": "Bathing",
+            "description": "Bathing",
+            "identifier": "Bathing"
+        },
+        {
+            "imageTitle": "BedToChair",
+            "description": "Bed To Chair",
+            "identifier": "BedToChair"
+        },
+        {
+            "imageTitle": "Dressing",
+            "description": "Dressing",
+            "identifier": "Dressing"
+        },
+        {
+            "imageTitle": "Eating",
+            "description": "Eating",
+            "identifier": "Eating"
+        },
+        {
+            "imageTitle": "Housework",
+            "description": "Housework",
+            "identifier": "Housework"
+        }
+    ],
+    "summary": {
+        "title": "Thanks",
+        "text": "Thank you for participating in the YADL Spot Assessment"
+    }
+}

@@ -251,6 +251,7 @@
 				TargetAttributes = {
 					161479BF1BD6CE8F0099A068 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = AA753846B2;
 						SystemCapabilities = {
 							com.apple.HealthKit = {
 								enabled = 1;
@@ -436,7 +437,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/ORKSample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.Sample";
+				PRODUCT_BUNDLE_IDENTIFIER = sample.RK.james;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -452,7 +453,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/ORKSample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.Sample";
+				PRODUCT_BUNDLE_IDENTIFIER = sample.RK.james;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

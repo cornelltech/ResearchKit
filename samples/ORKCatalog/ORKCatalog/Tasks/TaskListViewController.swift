@@ -133,27 +133,28 @@ class TaskListViewController: UITableViewController, ORKTaskViewControllerDelega
     }
     
     func taskViewController(taskViewController: ORKTaskViewController, viewControllerForStep step: ORKStep) -> ORKStepViewController? {
-        if let step = step as? YADLFullAssessmentStep {
-
-            let vc = YADLFullAssessmentStepViewController(nibName: "YADLFullAssessmentStepViewController", bundle: nil)
-            vc.step = step
-            
-            vc.restorationIdentifier = step.identifier
-            vc.restorationClass = YADLFullAssessmentStepViewController.self
-            return vc
-        }
-        else if let step = step as? YADLSpotAssessmentStep {
-            let vc = YADLSpotAssessmentStepViewController(nibName: "YADLSpotAssessmentStepViewController", bundle: nil)
-            vc.step = step
-//            vc.activityCellSelectedColor = UIColor.purpleColor()
-            vc.activityCellSelectedOverlayImage = UIImage(named: "first_tab")!
-//            vc.activitiesPerRow = 2
-//            vc.activityMinSpacing = 20
-            
-            vc.restorationIdentifier = step.identifier
-            vc.restorationClass = YADLSpotAssessmentStepViewController.self
-            return vc
-        }
+//        if let step = step as? YADLFullAssessmentStep {
+//
+//            let vc = YADLFullAssessmentStepViewController(nibName: "YADLFullAssessmentStepViewController", bundle: nil)
+//            vc.step = step
+//            
+//            vc.restorationIdentifier = step.identifier
+//            vc.restorationClass = YADLFullAssessmentStepViewController.self
+//            return vc
+//        }
+//        else
+//        if let step = step as? YADLSpotAssessmentStep {
+//            let vc = YADLSpotAssessmentStepViewController(nibName: "YADLSpotAssessmentStepViewController", bundle: nil)
+//            vc.step = step
+////            vc.activityCellSelectedColor = UIColor.purpleColor()
+//            vc.activityCellSelectedOverlayImage = UIImage(named: "first_tab")!
+////            vc.activitiesPerRow = 2
+////            vc.activityMinSpacing = 20
+//            
+//            vc.restorationIdentifier = step.identifier
+//            vc.restorationClass = YADLSpotAssessmentStepViewController.self
+//            return vc
+//        }
         
         return nil
     }
