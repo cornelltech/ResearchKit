@@ -21,8 +21,6 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var nothingToReportButton: UIButton!
     
-    
-    
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -39,7 +37,6 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
     }
     
     // Params for user to configure
-    
     var submitButtonColor: UIColor = UIColor.blueColor() {
         didSet {
             if let submitButton = self.submitButton {

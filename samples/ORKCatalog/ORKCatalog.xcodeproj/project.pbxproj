@@ -104,7 +104,6 @@
 		485475D71CB5C7B800EDC22D /* YADLFullAssessmentStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YADLFullAssessmentStepViewController.xib; sourceTree = "<group>"; };
 		485B7D5F1CD00FE600BECB4E /* YADLFullAssessmentTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLFullAssessmentTask.swift; sourceTree = "<group>"; };
 		485B7D611CD0148D00BECB4E /* UIColor+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+String.swift"; sourceTree = "<group>"; };
-		4898C43A1CB4327A00A7967E /* ORKCatelog-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ORKCatelog-Bridging-Header.h"; sourceTree = "<group>"; };
 		4898C43D1CB4432200A7967E /* YADLFullAssessmentStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLFullAssessmentStep.swift; sourceTree = "<group>"; };
 		48CAC0871CD11DE10017DFC3 /* YADLSpotAssessmentTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLSpotAssessmentTask.swift; sourceTree = "<group>"; };
 		48CAC0891CD120870017DFC3 /* YADLJSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YADLJSONParser.swift; sourceTree = "<group>"; };
@@ -226,7 +225,6 @@
 			children = (
 				48531ED31CB2F95D00E52656 /* YADL */,
 				86B89A9C1AB2C0A5001626A4 /* AppDelegate.swift */,
-				4898C43A1CB4327A00A7967E /* ORKCatelog-Bridging-Header.h */,
 				259E77171AFFD23B0070F786 /* Displaying Charts */,
 				3E838B891ABFD104006AE2D4 /* Displaying Results */,
 				3E838B881ABFD0E5006AE2D4 /* Presenting Tasks */,

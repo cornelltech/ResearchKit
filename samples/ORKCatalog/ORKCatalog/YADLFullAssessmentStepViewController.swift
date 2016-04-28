@@ -16,7 +16,6 @@ class YADLFullAssessmentStepViewController: ORKStepViewController {
     @IBOutlet weak var questionTextView: UITextView!
     @IBOutlet weak var buttonStackView: UIStackView!
     
-    
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -62,8 +61,7 @@ class YADLFullAssessmentStepViewController: ORKStepViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.  
+        
         guard let step = self.step as? YADLFullAssessmentStep
             else {
                 fatalError("Step property should have been set by now!")
@@ -71,7 +69,7 @@ class YADLFullAssessmentStepViewController: ORKStepViewController {
         
         self.activityImageView.image = step.image
         self.activityDescriptionLabel.text = step.title
-        //setupButtons
+
         self.setupDifficultyButtons()
         
         self.setupQuestionTextView(step)
@@ -117,7 +115,6 @@ class YADLFullAssessmentStepViewController: ORKStepViewController {
                 button.setTitleColor(yadlTextChoice.color, forState: .Normal)
             }
             
-            //                    button.layer.cornerRadius = 10
             button.layer.borderWidth = 1
             button.layer.borderColor = button.titleColorForState(.Normal)?.CGColor
             let heightContraint = NSLayoutConstraint(item: button, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.buttonHeight)
@@ -155,7 +152,6 @@ class YADLFullAssessmentStepViewController: ORKStepViewController {
         if let buttonIndex = self.buttons?.indexOf(button),
             let textChoice = self.textChoiceAtIndex(buttonIndex) {
             
-            print("Selected \(textChoice.text) - \(textChoice.value)")
             self.answer = textChoice.value
             
             if let delegate = self.delegate {
