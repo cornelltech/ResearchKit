@@ -13,77 +13,25 @@ import ResearchKit
 
 
 class YADLFullAssessmentTask: ORKOrderedTask {
-    
-    
-    
-    override init(identifier: String, steps: [ORKStep]?) {
-        super.init(identifier: identifier, steps: steps)
-    }
-    
-    class func loadChoicesFromJSON(choicesParameters: [AnyObject]) -> [ChoiceStruct]? {
-        
-        return choicesParameters.map { choiceParameter in
-            guard let choiceDict = choiceParameter as? [String: AnyObject],
-                let text = choiceDict[kChoiceTextTag] as? String,
-                let value = choiceDict[kChoiceValueTag] as? protocol<NSCoding, NSCopying, NSObjectProtocol>,
-                let colorString = choiceDict[kChoiceColorTag] as? String
-                else {
-                   fatalError("Malformed Choice: \(choiceParameter)")
-            }
 
-            let color = UIColor(hexString: colorString)
-            return ChoiceStruct(text: text, value: value, color: color)
-        }
-    }
-    
-    class func loadActivitiesFromJSON(activitiesParameters: [AnyObject]) -> [ActivityStruct]? {
-        return activitiesParameters.map { activityParameter in
-            
-            guard let activityDict = activityParameter as? [String: AnyObject],
-                let imageTitle = activityDict[kActivityImageTitleTag] as? String,
-                let image = UIImage(named: imageTitle),
-                let description = activityDict[kActivityDescriptionTag] as? String,
-                let identifier = activityDict[kActivityIdentifierTag] as? String
-                else {
-                    fatalError("Malformed Activity: \(activityParameter)")
-            }
-            return ActivityStruct(image: image, description: description, identifier: identifier)
-        }
-    }
-    
-    class func loadSummaryFromJSON(summaryParameters: AnyObject) -> SummaryStruct? {
+    //note that this is a Class method, the steps array needs to be passed to the init function
+    class func loadStepsFromJSON(jsonParser: YADLJSONParser) -> [ORKStep]? {
         
-        guard let summaryDict = summaryParameters as? [String: AnyObject],
-            let title = summaryDict[kSummaryTitleTag] as? String,
-            let text = summaryDict[kSummaryTextTag] as? String
-            else {
-                fatalError("Malformed Summary: \(summaryParameters)")
-        }
-        
-        return SummaryStruct(title: title, text: text)
-    }
-    
-    class func loadStepsFromJSON(json: AnyObject) -> [ORKStep]? {
-        
-        guard let prompt = json.objectForKey(kPromptTag) as? String
+        guard let prompt = jsonParser.fullAssessmentPrompt
             else {
                 fatalError("Missing or Malformed Prompt")
         }
-        
-        guard let choicesParameters = json.objectForKey(kChoicesTag) as? [AnyObject],
-            let choices = YADLFullAssessmentTask.loadChoicesFromJSON(choicesParameters)
+        guard let choices = jsonParser.fullAssessmentChoices
             else {
                 fatalError("Missing or Malformed Choices")
         }
         
-        guard let activitiesParameters = json.objectForKey(kActivitiesTag) as? [AnyObject],
-            let activities = YADLFullAssessmentTask.loadActivitiesFromJSON(activitiesParameters)
+        guard let activities = jsonParser.activities
             else {
                 fatalError("Missing or Malformed Activities")
         }
         
-        guard let summaryParameters = json.objectForKey(kSummaryTag),
-            let summary = YADLFullAssessmentTask.loadSummaryFromJSON(summaryParameters)
+        guard let summary = jsonParser.fullAssessmentSummary
             else {
                 fatalError("Missing or Malformed Summary")
         }
@@ -111,16 +59,13 @@ class YADLFullAssessmentTask: ORKOrderedTask {
     
     convenience init(identifier: String, json: AnyObject) {
         
-        let steps = YADLFullAssessmentTask.loadStepsFromJSON(json)
+        let yadlJsonParser = YADLJSONParser(json: json)
+        let steps = YADLFullAssessmentTask.loadStepsFromJSON(yadlJsonParser)
         
         self.init(identifier: identifier, steps: steps)
     }
     
     convenience init(identifier: String, propertiesFileName: String) {
-        
-//        let steps = try! YADLFullAssessmentTask.loadStepsFromPropertiesFile(propertiesFileName)
-//        
-//        self.init(identifier: identifier, steps: steps)
         
         guard let filePath = NSBundle.mainBundle().pathForResource(propertiesFileName, ofType: "json")
             else {
@@ -136,6 +81,11 @@ class YADLFullAssessmentTask: ORKOrderedTask {
         
         self.init(identifier: identifier, json: spotAssessmentParameters)
     }
+    
+    override init(identifier: String, steps: [ORKStep]?) {
+        super.init(identifier: identifier, steps: steps)
+    }
+    
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

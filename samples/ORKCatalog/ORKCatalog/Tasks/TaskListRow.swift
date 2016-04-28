@@ -935,12 +935,12 @@ enum TaskListRow: Int, CustomStringConvertible {
     }
     
     private var fullAssessmentTask: ORKTask {
-        return YADLFullAssessmentTask(identifier: String(Identifier.YADLFullAssessmentTask), propertiesFileName: "FullAssessment")
+        return YADLFullAssessmentTask(identifier: String(Identifier.YADLFullAssessmentTask), propertiesFileName: "YADL")
     }
     
     private var spotAssessmentTask: ORKTask {
         return YADLSpotAssessmentTask(identifier: String(Identifier.YADLFullAssessmentTask),
-                                      propertiesFileName: "SpotAssessment",
+                                      propertiesFileName: "YADL",
                                         activityIdentifiers: ["BedToChair", "Eating"])
     }
     

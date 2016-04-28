@@ -117,35 +117,33 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
             if let questionTextView = self.questionTextView {
                 questionTextView.text = step.title
             }
-            
-            self.setupOptionsFromStep(step)
         }
     }
     
-    func setupOptionsFromStep(step: YADLSpotAssessmentStep) {
-        if let submitButtonColor = step.submitButtonColor {
+    func setupOptionsFromTask(task: YADLSpotAssessmentTask) {
+        if let submitButtonColor = task.submitButtonColor {
             self.submitButtonColor = submitButtonColor
         }
         
-        if let nothingToReportButtonColor = step.nothingToReportButtonColor {
+        if let nothingToReportButtonColor = task.nothingToReportButtonColor {
             self.nothingToReportButtonColor = nothingToReportButtonColor
         }
         
-        if let activityCellSelectedColor = step.activityCellSelectedColor {
+        if let activityCellSelectedColor = task.activityCellSelectedColor {
             self.activityCellSelectedColor = activityCellSelectedColor
         }
         
-        self.activityCellSelectedOverlayImage = step.activityCellSelectedOverlayImage
+        self.activityCellSelectedOverlayImage = task.activityCellSelectedOverlayImage
         
-        if let activityCollectionViewBackgroundColor = step.activityCollectionViewBackgroundColor {
+        if let activityCollectionViewBackgroundColor = task.activityCollectionViewBackgroundColor {
             self.activityCollectionViewBackgroundColor = activityCollectionViewBackgroundColor
         }
         
-        if let activitiesPerRow = step.activitiesPerRow {
+        if let activitiesPerRow = task.activitiesPerRow {
             self.activitiesPerRow = activitiesPerRow
         }
         
-        if let activityMinSpacing = step.activityMinSpacing {
+        if let activityMinSpacing = task.activityMinSpacing {
             self.activityMinSpacing = activityMinSpacing
         }
     }
@@ -202,7 +200,11 @@ class YADLSpotAssessmentStepViewController: ORKStepViewController, UICollectionV
 
         if let step = self.step as? YADLSpotAssessmentStep {
             self.questionTextView.text = step.title
-            self.setupOptionsFromStep(step)
+        }
+        
+        if let taskViewController = self.taskViewController,
+            let task = taskViewController.task as? YADLSpotAssessmentTask {
+            self.setupOptionsFromTask(task)
         }
         
         self.updateUI()

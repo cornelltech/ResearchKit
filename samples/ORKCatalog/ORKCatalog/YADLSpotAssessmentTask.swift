@@ -11,31 +11,32 @@ import ResearchKit
 
 class YADLSpotAssessmentTask: ORKOrderedTask {
     
-    class func loadStepsFromJSON(json: AnyObject, activityIdentifiers: [String]?) -> [ORKStep]? {
+    
+    //note that this is a Class method, the steps array needs to be passed to the init function
+    class func loadStepsFromJSON(jsonParser: YADLJSONParser, activityIdentifiers: [String]?) -> [ORKStep]? {
         
-        guard let prompt = json.objectForKey(kPromptTag) as? String
+        
+        guard let prompt = jsonParser.spotAssessmentPrompt
             else {
                 fatalError("Missing or Malformed Prompt")
         }
         
-        guard let identifier = json.objectForKey(kIdentifierTag) as? String
+        guard let identifier = jsonParser.spotAssessmentIdentifier
             else {
                 fatalError("Missing or Malformed Identifier")
         }
         
-        guard let activitiesParameters = json.objectForKey(kActivitiesTag) as? [AnyObject],
-            let activities = YADLFullAssessmentTask.loadActivitiesFromJSON(activitiesParameters)
+        guard let activities = jsonParser.activities
             else {
                 fatalError("Missing or Malformed Activities")
         }
-        
-        guard let optionsDictionary = json.objectForKey(kOptionsTag) as? [String: AnyObject]
+    
+        guard let optionsDictionary = jsonParser.spotAssessmentOptions
             else {
                 fatalError("Missing or Malformed Options")
         }
         
-        guard let summaryParameters = json.objectForKey(kSummaryTag),
-            let summary = YADLFullAssessmentTask.loadSummaryFromJSON(summaryParameters)
+        guard let summary = jsonParser.spotAssessmentSummary
             else {
                 fatalError("Missing or Malformed Summary")
         }
@@ -58,34 +59,7 @@ class YADLSpotAssessmentTask: ORKOrderedTask {
         let answerFormat = ORKAnswerFormat.choiceAnswerFormatWithImageChoices(imageChoices)
         
         let spotAssessmentStep = YADLSpotAssessmentStep(identifier: identifier, title: prompt, answerFormat: answerFormat)
-        
-        if let submitButtonColor = optionsDictionary[kOptionsSubmitButtonColorTag] as? String {
-            spotAssessmentStep.submitButtonColor = UIColor(hexString: submitButtonColor)
-        }
-        
-        if let submitButtonColor = optionsDictionary[kOptionsSubmitButtonColorTag] as? String {
-            spotAssessmentStep.submitButtonColor = UIColor(hexString: submitButtonColor)
-        }
-        
-        if let nothingToReportButtonColor = optionsDictionary[kOptionsNothingToReportButtonColorTag] as? String {
-            spotAssessmentStep.nothingToReportButtonColor = UIColor(hexString: nothingToReportButtonColor)
-        }
-        
-        if let activityCellSelectedColor = optionsDictionary[kOptionsActivityCellSelectedColorTag] as? String {
-            spotAssessmentStep.activityCellSelectedColor = UIColor(hexString: activityCellSelectedColor)
-        }
-        
-        if let activityCellSelectedOverlayImageTitle = optionsDictionary[kOptionsActivityCellSelectedOverlayImageTitleTag] as? String {
-            spotAssessmentStep.activityCellSelectedOverlayImage = UIImage(named: activityCellSelectedOverlayImageTitle)
-        }
-        
-        if let activityCollectionViewBackgroundColor = optionsDictionary[kOptionsActivityCellSelectedOverlayImageTitleTag] as? String {
-            spotAssessmentStep.activityCollectionViewBackgroundColor = UIColor(hexString: activityCollectionViewBackgroundColor)
-        }
-        
-        spotAssessmentStep.activitiesPerRow = optionsDictionary[kOptionsActivitiesPerRowTag] as? Int
-        spotAssessmentStep.activityMinSpacing = optionsDictionary[kOptionsActivityMinSpacingTag] as? CGFloat
-        
+  
         let summaryStep = ORKInstructionStep(identifier: kYADLSpotAssessmentSummaryID)
         summaryStep.title = summary.title
         summaryStep.text = summary.text
@@ -94,6 +68,24 @@ class YADLSpotAssessmentTask: ORKOrderedTask {
             spotAssessmentStep,
             summaryStep
         ]
+    }
+    
+    var submitButtonColor: UIColor?
+    var nothingToReportButtonColor: UIColor?
+    var activityCellSelectedColor:UIColor?
+    var activityCellSelectedOverlayImage: UIImage?
+    var activityCollectionViewBackgroundColor: UIColor?
+    var activitiesPerRow: Int?
+    var activityMinSpacing: CGFloat?
+    
+    func configureOptions(jsonParser: YADLJSONParser) {
+        self.submitButtonColor = jsonParser.spotAssessmentSubmitButtonColor
+        self.nothingToReportButtonColor = jsonParser.spotAssessmentNothingToReportButtonColor
+        self.activityCellSelectedColor = jsonParser.spotAssessmentActivityCellSelectedColor
+        self.activityCellSelectedOverlayImage = jsonParser.spotAssessmentActivityCellSelectedOverlayImage
+        self.activityCollectionViewBackgroundColor = jsonParser.spotAssessmentActivityCollectionViewBackgroundColor
+        self.activitiesPerRow = jsonParser.spotAssessmentActivitiesPerRow
+        self.activityMinSpacing = jsonParser.spotAssessmentActivityMinSpacing
     }
     
     convenience init(identifier: String, propertiesFileName: String, activityIdentifiers: [String]? = nil) {
@@ -115,9 +107,11 @@ class YADLSpotAssessmentTask: ORKOrderedTask {
     
     convenience init(identifier: String, json: AnyObject, activityIdentifiers: [String]? = nil) {
         
-        let steps = YADLSpotAssessmentTask.loadStepsFromJSON(json, activityIdentifiers: activityIdentifiers)
+        let yadlJsonParser = YADLJSONParser(json: json)
+        let steps = YADLSpotAssessmentTask.loadStepsFromJSON(yadlJsonParser, activityIdentifiers: activityIdentifiers)
         
         self.init(identifier: identifier, steps: steps)
+        self.configureOptions(yadlJsonParser)
     }
     
     override init(identifier: String, steps: [ORKStep]?) {
