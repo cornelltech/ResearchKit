@@ -11,7 +11,7 @@ import ResearchKit
 
 class YADLSpotAssessmentTask: ORKOrderedTask {
     
-    class func loadStepsFromJSON(json: AnyObject) -> [ORKStep]? {
+    class func loadStepsFromJSON(json: AnyObject, activityIdentifiers: [String]?) -> [ORKStep]? {
         
         guard let prompt = json.objectForKey(kPromptTag) as? String
             else {
@@ -40,7 +40,16 @@ class YADLSpotAssessmentTask: ORKOrderedTask {
                 fatalError("Missing or Malformed Summary")
         }
         
-        let imageChoices = activities.map { activity in
+        let imageChoices = activities
+        .filter { activity in
+            if let identifiers = activityIdentifiers {
+                return identifiers.contains(activity.identifier)
+            }
+            else {
+                return true
+            }
+        }
+        .map { activity in
             
             return ORKImageChoice(normalImage: activity.image, selectedImage: nil, text: activity.description, value: activity.identifier)
             
@@ -87,29 +96,8 @@ class YADLSpotAssessmentTask: ORKOrderedTask {
         ]
     }
     
-//    class func loadStepsFromPropertiesFile(propertiesFileName: String) throws -> [ORKStep]? {
-//        guard let filePath = NSBundle.mainBundle().pathForResource(propertiesFileName, ofType: "json")
-//            else {
-//                fatalError("Unable to location file with YADL Spot Assessment Section in main bundle")
-//        }
-//        
-//        guard let fileContent = NSData(contentsOfFile: filePath)
-//            else {
-//                fatalError("Unable to create NSData with file content (YADL Spot Assessment data)")
-//        }
-//        
-//        let spotAssessmentParameters = try NSJSONSerialization.JSONObjectWithData(fileContent, options: NSJSONReadingOptions.MutableContainers)
-//        
-//        
-//        return YADLSpotAssessmentTask.loadStepsFromJSON(spotAssessmentParameters)
-//    }
-    
-    convenience init(identifier: String, propertiesFileName: String) {
-        
-//        let steps = try! YADLSpotAssessmentTask.loadStepsFromPropertiesFile(propertiesFileName)
-//        
-//        self.init(identifier: identifier, steps: steps)
-        
+    convenience init(identifier: String, propertiesFileName: String, activityIdentifiers: [String]? = nil) {
+
         guard let filePath = NSBundle.mainBundle().pathForResource(propertiesFileName, ofType: "json")
             else {
                 fatalError("Unable to location file with YADL Spot Assessment Section in main bundle")
@@ -122,12 +110,12 @@ class YADLSpotAssessmentTask: ORKOrderedTask {
         
         let spotAssessmentParameters = try! NSJSONSerialization.JSONObjectWithData(fileContent, options: NSJSONReadingOptions.MutableContainers)
         
-        self.init(identifier: identifier, json: spotAssessmentParameters)
+        self.init(identifier: identifier, json: spotAssessmentParameters, activityIdentifiers: activityIdentifiers)
     }
     
-    convenience init(identifier: String, json: AnyObject) {
+    convenience init(identifier: String, json: AnyObject, activityIdentifiers: [String]? = nil) {
         
-        let steps = YADLSpotAssessmentTask.loadStepsFromJSON(json)
+        let steps = YADLSpotAssessmentTask.loadStepsFromJSON(json, activityIdentifiers: activityIdentifiers)
         
         self.init(identifier: identifier, steps: steps)
     }

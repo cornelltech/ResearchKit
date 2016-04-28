@@ -935,73 +935,13 @@ enum TaskListRow: Int, CustomStringConvertible {
     }
     
     private var fullAssessmentTask: ORKTask {
-//        let textChoiceOneText = NSLocalizedString("Easy", comment: "")
-//        let textChoiceTwoText = NSLocalizedString("Moderate", comment: "")
-//        let textChoiceThreeText = NSLocalizedString("Hard", comment: "")
-//        
-//        // The text to display can be separate from the value coded for each choice:
-//        let textChoices = [
-//            YADLTextChoice(text: textChoiceOneText, value: "easy", color: UIColor.greenColor()),
-//            YADLTextChoice(text: textChoiceTwoText, value: "moderate", color: UIColor.yellowColor()),
-//            YADLTextChoice(text: textChoiceThreeText, value: "hard", color: UIColor.redColor())
-//        ]
-//        
-//        let answerFormat = ORKAnswerFormat.choiceAnswerFormatWithStyle(.SingleChoice, textChoices: textChoices)
-//        
-//        let imagesAndDescriptions = [
-//            ImageAndDescription(imageTitle: "Bathing", description: "Bathing"),
-//            ImageAndDescription(imageTitle: "BedToChair", description: "Bed to Chair"),
-//            ImageAndDescription(imageTitle: "Dressing", description: "Dressing"),
-//            ImageAndDescription(imageTitle: "Eating", description: "Eating"),
-//            ImageAndDescription(imageTitle: "Housework", description: "Housework")
-//        ]
-//        
-//        var steps: [ORKStep] = imagesAndDescriptions.enumerate().map { (i, imagesAndDescription) in
-//            return YADLFullAssessmentStep(identifier: String(Identifier.YADLFullAssessmentStep) + String(i), title: imagesAndDescription.description, text: "How hard is this activity for you on a difficult day?", image: UIImage(named: imagesAndDescription.imageTitle)!, answerFormat: answerFormat)
-//        }
-//        
-//        // Add a summary step.
-//        let summaryStep = ORKInstructionStep(identifier: String(Identifier.SummaryStep))
-//        summaryStep.title = NSLocalizedString("Thanks", comment: "")
-//        summaryStep.text = NSLocalizedString("Thank you for participating in this sample survey.", comment: "")
-//        
-//        steps.append(summaryStep)
-//        
-//        return ORKOrderedTask(identifier: String(Identifier.YADLFullAssessmentTask), steps: steps)
-//        
-        
         return YADLFullAssessmentTask(identifier: String(Identifier.YADLFullAssessmentTask), propertiesFileName: "FullAssessment")
     }
     
     private var spotAssessmentTask: ORKTask {
-//        let imagesAndDescriptions = [
-//            ImageAndDescription(imageTitle: "Bathing", description: "Bathing"),
-//            ImageAndDescription(imageTitle: "BedToChair", description: "Bed to Chair"),
-//            ImageAndDescription(imageTitle: "Dressing", description: "Dressing"),
-//            ImageAndDescription(imageTitle: "Eating", description: "Eating"),
-//            ImageAndDescription(imageTitle: "Housework", description: "Housework")
-//        ]
-//        
-//        let imageChoices = imagesAndDescriptions.map { imageAndDescription in
-//            
-//            return ORKImageChoice(normalImage: UIImage(named: imageAndDescription.imageTitle), selectedImage: nil, text: nil, value: imageAndDescription.description)
-//            
-//        }
-//        
-//        let answerFormat = ORKAnswerFormat.choiceAnswerFormatWithImageChoices(imageChoices)
-//        
-//        let summaryStep = ORKInstructionStep(identifier: String(Identifier.SummaryStep))
-//        summaryStep.title = NSLocalizedString("Thanks", comment: "")
-//        summaryStep.text = NSLocalizedString("Thank you for participating in this sample survey.", comment: "")
-//        
-//        let steps = [
-//            YADLSpotAssessmentStep(identifier: String(Identifier.YADLSpotAssessmentStep), title: "Which activities did you have trouble with today?", answerFormat: answerFormat),
-//            summaryStep
-//        ]
-//        
-//        return ORKOrderedTask(identifier: String(Identifier.YADLSpotAssessmentTask), steps: steps)
-        
-        return YADLSpotAssessmentTask(identifier: String(Identifier.YADLFullAssessmentTask), propertiesFileName: "SpotAssessment")
+        return YADLSpotAssessmentTask(identifier: String(Identifier.YADLFullAssessmentTask),
+                                      propertiesFileName: "SpotAssessment",
+                                        activityIdentifiers: ["BedToChair", "Eating"])
     }
     
     /**
