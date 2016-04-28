@@ -30,11 +30,6 @@ class YADLSpotAssessmentTask: ORKOrderedTask {
             else {
                 fatalError("Missing or Malformed Activities")
         }
-    
-        guard let optionsDictionary = jsonParser.spotAssessmentOptions
-            else {
-                fatalError("Missing or Malformed Options")
-        }
         
         guard let summary = jsonParser.spotAssessmentSummary
             else {

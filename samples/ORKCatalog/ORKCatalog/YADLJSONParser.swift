@@ -10,10 +10,12 @@ import Foundation
 import UIKit
 
 let kDefaultChoiceColor: UIColor = UIColor.blueColor()
-let kFullAssessmentPromptTag = "fullAssessmentPrompt"
-let kFullAssessmentIdentifierTag = "fullAssessmentIdentifier"
-let kSpotAssessmentPromptTag = "spotAssessmentPrompt"
-let kSpotAssessmentIdentifierTag = "spotAssessmentIdentifier"
+
+let kFullAssessmentTag = "full"
+let kSpotAssessmentTag = "spot"
+
+let kPromptTag = "prompt"
+let kIdentifierTag = "identifier"
 
 let kChoicesTag = "choices"
 let kChoiceTextTag = "text"
@@ -25,12 +27,11 @@ let kActivityImageTitleTag = "imageTitle"
 let kActivityDescriptionTag = "description"
 let kActivityIdentifierTag = "identifier"
 
-let kFullAssessmentSummaryTag = "fullAssessmentSummary"
-let kSpotAssessmentSummaryTag = "spotAssessmentSummary"
+let kSummaryTag = "summary"
 let kSummaryTitleTag = "title"
 let kSummaryTextTag = "text"
 
-let kSpotAssessmentOptionsTag = "spotAssessmentOptions"
+let kOptionsTag = "options"
 let kOptionsSubmitButtonColorTag = "submitButtonColor"
 let kOptionsNothingToReportButtonColorTag = "nothingToReportButtonColor"
 let kOptionsActivityCellSelectedColorTag = "activityCellSelectedColor"
@@ -103,69 +104,68 @@ class YADLJSONParser: NSObject {
         return SummaryStruct(title: title, text: text)
     }
     
-    
-    var fullAssessmentPrompt: String? {
-        return self.json.objectForKey(kFullAssessmentPromptTag) as? String
+    var fullAssessment: [String: AnyObject]? {
+        return self.json.objectForKey(kFullAssessmentTag) as? [String: AnyObject]
     }
     
-    var spotAssessmentPrompt: String? {
-        return self.json.objectForKey(kSpotAssessmentPromptTag) as? String
+    var fullAssessmentPrompt: String? {
+        return self.fullAssessment?[kPromptTag] as? String
     }
     
     var fullAssessmentIdentifier: String? {
-        return self.json.objectForKey(kFullAssessmentIdentifierTag) as? String
-    }
-    
-    var spotAssessmentIdentifier: String? {
-        return self.json.objectForKey(kSpotAssessmentIdentifierTag) as? String
-    }
-    
-    var fullAssessmentChoices: [ChoiceStruct]? {
-        guard let choicesParameters = self.json.objectForKey(kChoicesTag) as? [AnyObject],
-        let choices = YADLJSONParser.loadChoicesFromJSON(choicesParameters)
-            else {
-                return nil
-        }
-        
-        return choices
-    }
-    
-    var activities: [ActivityStruct]? {
-        guard let activitiesParameters = self.json.objectForKey(kActivitiesTag) as? [AnyObject],
-            let activities = YADLJSONParser.loadActivitiesFromJSON(activitiesParameters)
-            else {
-                return nil
-        }
-        
-        return activities
+        return self.fullAssessment?[kIdentifierTag] as? String
     }
     
     var fullAssessmentSummary: SummaryStruct? {
-        guard let summaryParameters = self.json.objectForKey(kFullAssessmentSummaryTag),
-            let summary = YADLJSONParser.loadSummaryFromJSON(summaryParameters)
+        guard let summaryParameters = self.fullAssessment?[kSummaryTag]
             else {
                 return nil
         }
         
-        return summary
+        return YADLJSONParser.loadSummaryFromJSON(summaryParameters)
+    }
+    
+    var spotAssessment: [String: AnyObject]? {
+        return self.json.objectForKey(kSpotAssessmentTag) as? [String: AnyObject]
+    }
+    
+    var spotAssessmentPrompt: String? {
+        return self.spotAssessment?[kPromptTag] as? String
+    }
+    
+    var spotAssessmentIdentifier: String? {
+        return self.spotAssessment?[kIdentifierTag] as? String
     }
     
     var spotAssessmentSummary: SummaryStruct? {
-        guard let summaryParameters = self.json.objectForKey(kSpotAssessmentSummaryTag),
-            let summary = YADLJSONParser.loadSummaryFromJSON(summaryParameters)
+        guard let summaryParameters = self.spotAssessment?[kSummaryTag]
             else {
                 return nil
         }
         
-        return summary
+        return YADLJSONParser.loadSummaryFromJSON(summaryParameters)
     }
     
-    var spotAssessmentOptions: [String: AnyObject]? {
-        guard let optionsDictionary = self.json.objectForKey(kSpotAssessmentOptionsTag) as? [String: AnyObject]
+    var fullAssessmentChoices: [ChoiceStruct]? {
+        guard let choicesParameters = self.fullAssessment?[kChoicesTag] as? [AnyObject]
             else {
                 return nil
         }
-        return optionsDictionary
+        
+        return YADLJSONParser.loadChoicesFromJSON(choicesParameters)
+    }
+    
+    var activities: [ActivityStruct]? {
+        guard let activitiesParameters = self.json.objectForKey(kActivitiesTag) as? [AnyObject]
+            else {
+                return nil
+        }
+        
+        return YADLJSONParser.loadActivitiesFromJSON(activitiesParameters)
+    }
+    
+    var spotAssessmentOptions: [String: AnyObject]? {
+        return self.spotAssessment?[kOptionsTag] as? [String: AnyObject]
     }
     
     func colorForSpotAssessmentKey(key: String) -> UIColor? {
